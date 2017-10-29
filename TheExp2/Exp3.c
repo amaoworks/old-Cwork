@@ -21,6 +21,22 @@ int rem(int num1 , int num2){
 }
 
 typedef int (*fptrOperation)(int , int);
+    
+fptrOperation select(char opcode){
+	switch(opcode){
+	    case '+': return add;
+		      break;
+	    case '-': return sub;
+		      break;
+	    case '*': return mul;
+		      break;
+	    case '/': return div;
+		      break;
+	    case '%': return rem;
+		      break;
+	    default: printf("you enter a error symbol !\n");
+	}
+    }
 
 int evaluate(char opcode, int num1, int num2){
     fptrOperation operation = select(opcode);
@@ -32,7 +48,8 @@ int main(int argc,char **argv){
     char sym ;
     printf("Please input the Formula,like '1,+,1'\n");
     scanf("%d,%c,%d", &var1, &sym, &var2);
-    fptrOperation select(char opcode){
+    printf("%d,%c,%d", var1, sym, var2);
+    /*fptrOperation select(char opcode){
 	switch(opcode){
 	    case '+': return add;
 	    case '-': return sub;
@@ -40,7 +57,7 @@ int main(int argc,char **argv){
 	    case '/': return div;
 	    case '%': return rem;
 	}
-    }
+    }*/
     printf("The result is:%d %c %d = %d\n", var1, sym, var2, evaluate('sym',var1,var2));
     
 
