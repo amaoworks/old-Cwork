@@ -48,17 +48,7 @@ int main(int argc,char **argv){
     char sym ;
     printf("Please input the Formula,like '1,+,1'\n");
     scanf("%d,%c,%d", &var1, &sym, &var2);
-    printf("%d,%c,%d", var1, sym, var2);
-    /*fptrOperation select(char opcode){
-	switch(opcode){
-	    case '+': return add;
-	    case '-': return sub;
-	    case '*': return mul;
-	    case '/': return div;
-	    case '%': return rem;
-	}
-    }*/
-    printf("The result is:%d %c %d = %d\n", var1, sym, var2, evaluate('sym',var1,var2));
+    printf("The result is:%d %c %d = %d\n", var1, sym, var2, evaluate(sym,var1,var2));
     
 
     return 0;
