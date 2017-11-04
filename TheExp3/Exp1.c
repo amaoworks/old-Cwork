@@ -15,10 +15,10 @@ int main(int argc , char **argv){
 	//the algorithm
 	for(int i = 0 ; i < ( size - 1) ; i++ ){
 		for(int j = 0 ; j < ( size - 1 - i) ; j++ )
-			if ( a[j] > a[j+1]){
-				temp = a[j] ;
-				a[j] = a[j+1] ;
-				a[j+1] = temp ;
+			if ( arrar[j] > arrar[j+1]){
+				temp = arrar[j] ;
+				arrar[j] = arrar[j+1] ;
+				arrar[j+1] = temp ;
 			}
 	}
 
@@ -27,6 +27,7 @@ int main(int argc , char **argv){
 	for(int i = 0 ; i < size ; i++ ){
 		printf("%d\t", *(ptr_arr + i) );
 	}
+	printf("\n");
 
 	return 0;
 }
