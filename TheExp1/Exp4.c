@@ -29,15 +29,15 @@ int main(int argc,char **argv){
     printf("The answer of test two: \n");
     ptr_cvar1 = &cvar1;
     for(int i = 0; i < TIMES ; i++){
-	var1 += NUM;
+	ptr_cvar1 += NUM;
     }
-    printf("the *ptr_cvar1 :%d\n", *ptr_cvar1);
+    printf("the *ptr_cvar1 :%d and cvar1 : %d \n", *ptr_cvar1, cvar1);
 
     //question three
     printf("The answer of test three: \n");
     int var2 = 2;
-    *cptr_var1 = var1 ;
-    *cptr_var2 = var2 ;
+    *cptr_var1 = &var1 ;
+    *cptr_var2 = &var2 ;
     for(int i = 0; i < TIMES ; i++){
 	(*cptr_var1) ++;
 	(*cptr_var2) ++;

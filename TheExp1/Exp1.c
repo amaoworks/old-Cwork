@@ -3,7 +3,8 @@
 
 int main(int argc, char **argv)
 {
-    int size;
+    //指定内存空间并分配
+	int size;
     printf("input the size: \n");
     scanf("%d", &size);
     int *ptr_arr = (int *)malloc(sizeof(int) * size);
@@ -15,13 +16,13 @@ int main(int argc, char **argv)
     scanf("%d", &orinVal);
     printf("input the addVal: \n");
     scanf("%d", &addVal);
-    int *start = ptr_arr;
+    int *use = ptr_arr;
     for(int i = 0; i < size; i++){
 	*(ptr_arr + i) = orinVal + i *addVal;
     }
 
     for(int i = 0; i < size; i++){
-	printf("address: %p and value: %d\n", start + i, *(start + i));
+	printf("address: %p and value: %d\n", use + i, *(use + i));
     }
 
     return 0;
