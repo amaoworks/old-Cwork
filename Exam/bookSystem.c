@@ -263,8 +263,18 @@ void back_book() {
 	printf("\t\t请输入归还的日期（年 /月/日） : "); 
 	scanf("%d%c%d%c%d",&c.back.year,&c.back.ch1,&c.back.month,&c.back.ch2,&c.back.day); 
 	//时间
-	//if(c.back.year<c.borrow.year)
-	//	back_book();
+	if(c.back.year>c.borrow.year){
+		printf("\t\t还书时间不应早于借书时间！请重新输入！\n");
+		back_book();
+	}
+	if(c.back.month>c.borrow.month){
+		printf("\t\t还书时间不应早于借书时间！请重新输入！\n");
+		back_book();
+	}
+	if(c.back.day>c.borrow.day){
+		printf("\t\t还书时间不应早于借书时间！请重新输入！\n");
+		back_book();
+	}
 		//else if(c.back.month<c.borrow.month)
 		//back_book();
 		//else if(c.back.day<c.borrow.day)
