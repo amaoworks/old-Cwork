@@ -200,9 +200,10 @@ void addBook() {
 }
 
 //租借音像图书
+//void borrowBook(Member *c) { 
 void borrowBook() { 
 	Library a={0},b[Max]={0},*p1=NULL,*p2=NULL; //b 为结构数组
-	Member c={0}; 
+	Member c ={0}; 
 	char ch[10]={0}; 
 	int n=0,m=0; 
 	FILE *fp1; 
@@ -220,13 +221,15 @@ void borrowBook() {
 	printf(" 请输入租借的书的编号： "); 
 	scanf("%s",c.memberId); 
 	printf(" 请输入租借的日期（年 /月/日）： "); 
-	scanf("%d%c%d%c%d",&c.borrow.year,&c.borrow.ch1 ,&c.borrow.month,&c.borrow.ch2,&c.borrow.day); 
+	//scanf("%d%c%d%c%d",&c.borrow.year,&c.borrow.ch1 ,&c.borrow.month,&c.borrow.ch2,&c.borrow.day); 
+	scanf("%d%c%d%c%d",c.borrow.year,c.borrow.ch1 ,c.borrow.month,c.borrow.ch2,c.borrow.day); 
+	//scanf("%d%c%d%c%d",c->borrow->year,c->borrow->ch1 ,&c.borrow.month,&c.borrow.ch2,&c.borrow.day); 
 	strcpy(ch,c.memberId); 
 	fprintf(fp1,"%s\t%s\t%d%c%d%c%d ",c.memberName,c.memberId,c.borrow.year,c.borrow.ch1,c.borrow.month,c.borrow.ch2,c.borrow.day); 
 	p1=b; 
 	while(feof(fp2)==0) 
 		{ 
-			fscanf(fp2,"%s%s%d%d%d",p1->bookId,p1->bookName,&p1->bookPrice,&p1->bookNum,&p1->bookRent); 
+			fscanf(fp2,"%s%s%f%d%d",p1->bookId,p1->bookName,&p1->bookPrice,&p1->bookNum,&p1->bookRent); 
 			p1++; 
 			n++; 
 	} 
@@ -245,22 +248,20 @@ void borrowBook() {
 			getchar(); 
 	} 
 	else 
-	if((strcmp(ch,p2->bookId==0)&&(p2->bookRent==0)) 
+	if((strcmp(ch,p2->bookId==0)&&(p2->bookRent==0)))
 		{ 
 			printf("\n 此音像图书已全部借出！ \n"); 
 			printf(" 输入任意键继续！ \n"); 
-			//op=getchar();
-			//op=getchar();
 			getchar(); 
 			getchar(); 
 	} 
 	else 
 	if((strcmp(ch,p2->bookId)==0)&&(p2->bookRent!=0)) 
 		{ 
-			printf(" 应交的押金额为 %d 元！ ",(p2->bookPrice)*3); 
+			printf(" 应交的押金额为 %f 元！ ",(p2->bookPrice)*3); 
 			c.rent=(p2->bookPrice)*3; 
 			p2->bookRent=p2->bookRent-1; 
-			fprintf(fp1,"%d\n",c.rent); 
+			fprintf(fp1,"%f\n",c.rent); 
 			fclose(fp1); 
 			fclose(fp2); 
 	printf("\n 输入任意键继续！ \n");  
@@ -272,11 +273,11 @@ void borrowBook() {
 		exit(0); 
 } 
 	for(p1=b;p1<b+n;p1++) 
-		fprintf(fp2,"%s\t%s\t%d\t%d\t%d\n",p1->bookId,p1->bookName,p1->bookPrice,p1->bookNum,p1->bookRent); 
+		fprintf(fp2,"%s\t%s\t%f\t%d\t%d\n",p1->bookId,p1->bookName,p1->bookPrice,p1->bookNum,p1->bookRent); 
 		system("clear"); 
 		fclose(fp2); 
 }
-
+/*
 //归还音像图书
 void back_book() { 
 	struct library a={0},b[Max]={0},*p1=NULL,*p2=NULL; //b 为结构数组
@@ -477,4 +478,4 @@ void storage_book() {
 
 
 
-
+*/
