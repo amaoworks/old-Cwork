@@ -20,9 +20,9 @@ typedef struct Sqlist{
 	int listsize;		//当前分配的储存空间
 } Sqlist;
 
-int InitList_sq(Sqlist *L);		//
-int CreatList_sq(Sqlist *L, int n);		//
-int ListInsert_sq(Sqlist *L, int i, ElemType e);	//
+int InitList_sq(Sqlist *L);		//初始化顺序表
+int CreatList_sq(Sqlist *L, int n);		//创建顺序表并手动分配元素
+int ListInsert_sq(Sqlist *L, int i, ElemType e);//插入指定元素到顺序表指定位置
 int PrintList_sq(Sqlist *L);	//输出顺序表的元素
 int ListDelete_sq(Sqlist *L, int i);	//删除第i个元素
 int ListLocate(Sqlist *L, ElemType e);	//查找值为e的元素
@@ -39,7 +39,7 @@ int CreatList_sq(Sqlist *L, int n){
 	ElemType e;
 	int i;
 	for(i=0 ;i<n ;i++){
-		printf("input data %d", i+1);
+		printf("input data %d:", i+1);
 		scanf("%d", &e);
 		if(!ListInsert_sq(L,i+1,e))
 			return ERROR;
@@ -54,9 +54,9 @@ int PrintList_sq(Sqlist *L){
 	return OK;
 }
 
-int ListInsert_sq(Sqlist *L, int ElemType e){
+int ListInsert_sq(Sqlist *L, int i, ElemType e){
 	int k;
-	if(i<1 ||i>L->length+1)
+	if(i<1 || i>L->length+1)
 		return ERROR;
 	if(L->length>=L->listsize){
 		L->slist=(ElemType*)realloc(L->slist,(INIT_SIZE+INCREM)*sizeof(ElemType));
@@ -70,4 +70,66 @@ int ListInsert_sq(Sqlist *L, int ElemType e){
 	L->slist[i-1]=e;
 	L->length++;
 	return OK;
+}
+
+int ListDelete_sq(Sqlist *L, int i){
+	int *p , *q;
+	if(i<1 || i>L->length)
+		return ERROR;
+	p = L->slist + i - 1;
+	q = L->slist + L->length - 1;
+	for( ; p <= q ; p++)
+		*p = *(p+1);
+	L->length--;
+	return OK;
+}
+
+int ListLocate(Sqlist *L, ElemType e){
+	int n = 0;
+	int *p = L->slist;
+
+	for(int i = 0 ; i<L->length ; i++ , p++)
+		if(*p == e)
+			{printf("Find data:%d and location is %d\n", e, i+1);
+			 n = 1;}
+
+	if(n == 0)
+		printf("Can't find data:%d's element\n", e);
+}
+
+int main(int argc, char **argv){
+	Sqlist sl;
+	int n , m , k;
+
+	printf("please input n:");
+	scanf("%d",&n);
+	if(n>0){
+		printf("\n1-Create Sqlist:\n");
+		InitList_sq(&sl);
+		CreatList_sq(&sl, n);
+		printf("\n2-Print Sqlist:\n");
+		PrintList_sq(&sl);
+		printf("\nplease input insert location and data:(location,data)\n");
+		scanf("%d,%d",&m,&k);
+		ListInsert_sq(&sl , m , k);
+		printf("\n3-Print Sqlist:\n");
+		PrintList_sq(&sl);
+		printf("\n");
+		
+		//Here's the test part
+		printf("Attention! Test part!\n");
+		ElemType e , i;
+		printf("4-Please input the data you want to find:\n");
+		scanf("%d",&e);
+		ListLocate(&sl , e);
+		printf("\n5-Please input the location where the data you want to delete:\n");
+		scanf("%d",&i);
+		ListDelete_sq(&sl , i);
+		printf("\n6-Print Sqlist:\n");
+		PrintList_sq(&sl);
+		printf("\n");
+	}
+	else
+		printf("ERROR");
+	return 0;
 }
