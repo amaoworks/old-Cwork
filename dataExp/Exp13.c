@@ -20,8 +20,8 @@ typedef struct LNode{	//线性表的单链表储存
 LinkList CreateList(int n);		//创建并初始化单链表
 void PrintList(LinkList L);		//输出带头结点单链表的所有元素
 int GetElem(LinkList L ,int i ,ElemType *e);	//在链表中找出指定元素的对应位置
-int ListInsert(LinkList *L ,int i ,ElemType *e);
-int ListDelete(LinkList *L , int i);
+int ListInsert(LinkList L ,int i ,ElemType *e);
+int ListDelete(LinkList L , int i);
 
 LinkList CreateList(int n){
 	LNode *p , *q , *head;
@@ -64,17 +64,17 @@ int GetElem(LinkList L ,int i ,ElemType *e){
 }
 
 //插入算法
-int ListInsert(LinkList *L ,int i ,ElemType *e){
+int ListInsert(LinkList L ,int i ,ElemType *e){
 	int j = 0;
 	LNode *p , *q;
-	p = (*L)->next;
+	p = L;
 	while(p && j<i-1){
 		p = p->next;
 		j++;
 	}
 	if(p == NULL || j>i)
 		return ERROR;
-	//q = LNode *malloc(sizeof(LNode));
+	q = (LNode *)malloc(sizeof(LNode));
 	q->data = *e;
 	q->next = p->next;
 	p->next = q;
@@ -82,10 +82,10 @@ int ListInsert(LinkList *L ,int i ,ElemType *e){
 }
 
 //删除算法
-int ListDelete(LinkList *L , int i){
+int ListDelete(LinkList L , int i){
 	int j = 0;
 	LNode *p , *q;
-	p = (*L)->next;
+	p = L;
 	while(p && j<i-1){
 		p = p->next;
 		j++;
@@ -122,13 +122,13 @@ int main(int argc ,char **argv){
 		printf("4-Insert data to LinkList:\n");
 		printf("Please input the data and the location(like 1,2):\n");
 		scanf("%d,%d", &e, &i);
-		ListInsert(&L , i , &e);
+		ListInsert(L , i , &e);
 		printf("\nPrint LinkList:\n");
 		PrintList(L);
 		printf("\n5-Delete data from LinkList:\n");
 		printf("Please input the location:\n");
 		scanf("%d", &i);
-		ListDelete(&L , i);
+		ListDelete(L , i);
 		printf("\nPrint LinkList:\n");
 		PrintList(L);
 		printf("\n");
