@@ -17,7 +17,7 @@ typedef struct{
     ElemType *base;
     ElemType *top;
     int stacksize;     /*当前已分配的存储空间*/
-}SqStack;
+} SqStack;
 
 int InitStack(SqStack *S);   /*构造空栈*/
 int push(SqStack *S,ElemType e); /*入栈*/
@@ -34,11 +34,26 @@ int InitStack(SqStack *S){
 }/*InitStack*/
 
 int Push(SqStack *S,ElemType e){
-    
+	if(S->top - S->base >= S->stacksize){
+		S->base = (ElemType *)realloc(S->base ,(S->stacksize+STACKINCREMENT)*sizeof(ElemType));
+		if(!S->base){
+			return ERROR;
+		}
+		S->top = S->base + S->stacksize;
+		S->stacksize += STACKINCREMENT;
+	}
+	S->top = e;
+	S->top++;
+	return OK;
 }/*Push*/
 
 int Pop(SqStack *S,ElemType *e){
-   
+	if(S->base == S->top){
+		return ERROR;
+	}
+	S->top--;
+	*e = S->top;
+	return OK;
 }/*Pop*/
 
 int CreateStack(SqStack *S){

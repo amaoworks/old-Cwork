@@ -11,8 +11,7 @@
 #define M 20
 #define  elemtype  char
 
-typedef struct
-{
+typedef struct {
     elemtype stack[M];
     int top;
 } stacknode;
