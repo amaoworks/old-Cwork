@@ -61,22 +61,24 @@ void createGraph_list(vnode adjlist[],int *p){ /*建立有向图的邻接表*/
     }
 }
 
-void topSort(vnode g[],int n){ /*拓扑排序*/
-	int TopoSort(va_list G){
-	Stack S;
-	int indegree[MAX_VERTEX_NUM];
-	int i , count , k;
-	AreNode *p;
-	FindID(G,indegree);
-	InitStack(&s);
-	for(i=0;i<G.vexnum;i++)
-		if(indegree[i]==0) Push(&s,i);
-			count=0;
-	while(!LsEmpty(s)){
-		Pap(&s,&i);
-	}
-}
-}
+void topSort(vnode g[],int n){
+
+}//{ /*拓扑排序*/
+//	int TopoSort(va_list G){
+//	Stack S;
+//	int indegree[MAX_VERTEX_NUM];
+//	int i , count , k;
+//	AreNode *p;
+//	FindID(G,indegree);
+//	InitStack(&s);
+//	for(i=0;i<G.vexnum;i++)
+//		if(indegree[i]==0) Push(&s,i);
+//			count=0;
+//	while(!LsEmpty(s)){
+//		Pap(&s,&i);
+//	}
+//}
+//}
 
 int main(int argc ,char **argv){
     vnode adjlist[N];
