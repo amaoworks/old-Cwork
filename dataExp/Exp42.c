@@ -7,83 +7,99 @@
 
 #include<stdio.h>
 #include<malloc.h>
-
 #define N 20
-typedef struct edgenode{  /*图的邻接表：邻接链表结点*/
-    int adjvex;  /*顶点序号*/
-    struct edgenode *next; /*下一个结点的指针*/
-}edgenode;
 
-typedef struct vnode{ /*图的邻接表：邻接表*/
-    char data;    /*顶点信息*/
-    int ind;      /*顶点入度*/
-    struct edgenode *link;  /*指向邻接链表指针*/
-}vnode;
+typedef struct EdgeNode{
+	int adjvex;
+	struct EdgeNode *next;
+} EdgeNode;
 
-void createGraph_list(vnode adjlist[],int *p); /*建立有向图的邻接表*/
-void topSort(vnode g[],int n); /*拓扑排序*/
+typedef struct VNode{
+	char data; 
+	int ind; 
+	struct EdgeNode *link;
+} VNode;
 
-void createGraph_list(vnode adjlist[],int *p){ /*建立有向图的邻接表*/
-    int i,j,n,e;
-    char v;
-    edgenode *s;
-    i=0;n=0;e=0;
-    printf("输入顶点序列(以#结束)：\n");
-    while((v=getchar())!='#')
-    {
-        adjlist[i].data=v;        /*读入顶点信息*/
-        adjlist[i].link=NULL;
-        adjlist[i].ind=0;
-        i++;
-    }
-    n=i;
-    *p=n;
-    /*建立邻接链表*/
-    printf("\n请输入弧的信息(i=-1结束)：i,j:\n");
-    scanf("%d,%d",&i,&j);
-    while(i!=-1){
-        s=(struct edgenode*)malloc(sizeof(edgenode));
-        s->adjvex=j;
-        s->next=adjlist[i].link;
-        adjlist[i].link=s;
-        adjlist[j].ind++;  /*顶点j的入度加1*/
-        e++;
-        scanf("%d,%d",&i,&j);
-    }
-    printf("邻接表:");
-    for(i=0;i<n;i++){  /*输出邻接表*/
-        printf("\n%c,%d:",adjlist[i].data,adjlist[i].ind);
-        s=adjlist[i].link;
-        while(s!=NULL){
-            printf("->%d",s->adjvex);
-            s=s->next;
-        }
-    }
+typedef struct ALgraph{
+	int vexnum,arcnum;
+	VNode adjlist[N];
+}ALGraph;
+
+void createGraph_list(ALGraph *g);
+void topSort(ALGraph *g);
+void createGraph_list(ALGraph *g){
+	int i,j,e;
+	char v;
+	EdgeNode *s;
+	i=0;
+	e=0;
+	printf("\n 输入顶点序列 (以 #结束 ): \n");
+	while((v=getchar())!='#'){
+		g->adjlist[i].data=v;
+		g->adjlist[i].link=NULL;
+		g->adjlist[i].ind=0;
+		i++;
+	}
+	g->vexnum=i;
+	printf("\n 请输入弧的信息(顶点序号 ,顶点序号 ),以 (-1,-1) 结束 :\n");
+	scanf("%d,%d",&i,&j);
+	while(i!=-1) {
+		s=(struct EdgeNode*)malloc(sizeof(EdgeNode));
+		s->adjvex=j;
+		s->next=g->adjlist[i].link;
+		g->adjlist[i].link=s;
+		g->adjlist[j].ind++;
+		e++;
+		scanf("%d,%d",&i,&j);
+	}
+	g->arcnum=e;
 }
 
-void topSort(vnode g[],int n){
-
-}//{ /*拓扑排序*/
-//	int TopoSort(va_list G){
-//	Stack S;
-//	int indegree[MAX_VERTEX_NUM];
-//	int i , count , k;
-//	AreNode *p;
-//	FindID(G,indegree);
-//	InitStack(&s);
-//	for(i=0;i<G.vexnum;i++)
-//		if(indegree[i]==0) Push(&s,i);
-//			count=0;
-//	while(!LsEmpty(s)){
-//		Pap(&s,&i);
-//	}
-//}
-//}
+void topSort(ALGraph *g) {
+	int i,j,k,top=0,m=0,s[N];
+	EdgeNode *p;
+	for(i=0; i<g->vexnum; i++)
+		if(g->adjlist[i].ind==0)
+			s[top++]=i;
+	printf("\n 输出拓扑序列:");
+	while(top>0) {
+		j=s[--top];
+		printf("%c",g->adjlist[j].data);
+		m++;
+		p=g->adjlist[j].link;
+		while(p!=NULL) {
+			k=p->adjvex;
+			g->adjlist[k].ind--;
+			if(g->adjlist[k].ind==0)
+				s[top++]=k;
+			p=p->next;
+		}
+	}
+	printf("\n 共输出 %d 个顶点 \n",m);
+	if(m<g->vexnum)
+		printf(" 图中有环! ");
+	else
+		printf(" 图中无环! ");
+}
 
 int main(int argc ,char **argv){
-    vnode adjlist[N];
-    int n,*p;
-    p=&n;
-    createGraph_list(adjlist,p);
-    return 0;
+	ALGraph g;
+	int i;
+	EdgeNode *s;
+	printf("**********************\n");
+	printf("\n1- 输入图的基本信息:\n");
+	createGraph_list(&g);
+	printf("\n2- 图的邻接表 :");
+	for(i=0; i<g.vexnum; i++) {
+		printf("\n%c,%d:",g.adjlist[i].data,g.adjlist[i].ind);
+		s=g.adjlist[i].link;
+		while(s!=NULL) {
+			printf("->%d",s->adjvex);
+			s=s->next;
+		}
+	}
+	printf("\n");
+	printf("\n3- 根据图的邻接表实现拓扑排序:\n");
+	topSort(&g);
+	return 0;
 }
